@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  repo: lukemiller93/country-barn-builders
+  repo: Watson-Barn-Rentals/country-barn-builders
 
 publish_mode: editorial_workflow
 media_folder: static/assets
