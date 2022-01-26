@@ -43,8 +43,7 @@
     "prettier": "^2.5.1"
   },
   "engines": {
-    "node": "^17.4.0",
-    "yarn": "^1.22.15"
+    "node": ">=12.18.0"
   },
   "keywords": [
     "gatsby"
