@@ -42,9 +42,6 @@
   "devDependencies": {
     "prettier": "^2.5.1"
   },
-  "engines": {
-    "node": ">=14.15.0 <=17.4.0"
-  },
   "keywords": [
     "gatsby"
   ],
