@@ -76,37 +76,31 @@ tagTemplate.propTypes = {
 }
 
 export default tagTemplate
-export const tagQuery = graphql`
-  query($tag: String) {
-    allMarkdownRemark(
-      filter: { frontmatter: { size: { eq: $tag } } }
-      limit: 2000
-    ) {
-      totalCount
-      edges {
-        node {
-          id
-          frontmatter {
-            date
-            size
-            style
-            serial
-            price
-            options
-            gallery_image {
-              gallery_item {
-                id
-                childImageSharp {
-                  fluid {
-                    ...GatsbyImageSharpFluid
-                  }
-                }
+export const tagQuery = graphql`query ($tag: String) {
+  allMarkdownRemark(filter: {frontmatter: {size: {eq: $tag}}}, limit: 2000) {
+    totalCount
+    edges {
+      node {
+        id
+        frontmatter {
+          date
+          size
+          style
+          serial
+          price
+          options
+          gallery_image {
+            gallery_item {
+              id
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH)
               }
-              alt_text
             }
+            alt_text
           }
         }
       }
     }
   }
+}
 `

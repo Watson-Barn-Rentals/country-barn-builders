@@ -1,6 +1,6 @@
 //core
 import { graphql, Link } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 import React from "react"
 import styled from "@emotion/styled"
 
@@ -250,10 +250,9 @@ const Locations = ({ data, location }) => {
             <LocationCard key={node.id}>
               <CardTitle>{title}</CardTitle>
               {cover.feature_image && (
-                <Image
-                  fluid={cover.feature_image.childImageSharp.fluid}
-                  alt={cover.alt_text}
-                />
+                <GatsbyImage
+                  image={cover.feature_image.childImageSharp.gatsbyImageData}
+                  alt={cover.alt_text} />
               )}
               <CardBody>
                 <CardContact>
@@ -300,50 +299,45 @@ const Locations = ({ data, location }) => {
                 </CardButton>
               </CardBody>
             </LocationCard>
-          )
+          );
         })}
       </LocationCardSection>
     </Layout>
-  )
+  );
 }
 
 export default Locations
 
-export const locationsQuery = graphql`
-  query locations {
-    allMarkdownRemark(
-      filter: { frontmatter: { template: { eq: "location" } } }
-    ) {
-      edges {
-        node {
-          id
-          frontmatter {
-            title
-            cover {
-              alt_text
-              feature_image {
-                id
-                childImageSharp {
-                  fluid(maxWidth: 620, quality: 60) {
-                    ...GatsbyImageSharpFluid
-                  }
-                }
+export const locationsQuery = graphql`query locations {
+  allMarkdownRemark(filter: {frontmatter: {template: {eq: "location"}}}) {
+    edges {
+      node {
+        id
+        frontmatter {
+          title
+          cover {
+            alt_text
+            feature_image {
+              id
+              childImageSharp {
+                gatsbyImageData(width: 620, quality: 60, layout: CONSTRAINED)
               }
             }
-            address {
-              city
-              post_code
-              state
-              street
-            }
-            phone
-            business_hours {
-              day
-              hours
-            }
+          }
+          address {
+            city
+            post_code
+            state
+            street
+          }
+          phone
+          business_hours {
+            day
+            hours
           }
         }
       }
     }
   }
+}
 `

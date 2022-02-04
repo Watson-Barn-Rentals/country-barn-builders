@@ -7,7 +7,7 @@ import CardActions from "@material-ui/core/CardActions"
 import CardContent from "@material-ui/core/CardContent"
 import Button from "@material-ui/core/Button"
 import { Link } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 import styled from "@emotion/styled"
 
 const CardTitle = styled.h3`
@@ -52,10 +52,9 @@ function ProductCard(props) {
     <Card className={classes.card}>
       <CardActionArea>
         <StyledLink to={`/specials/${serial}`}>
-          <Image
-            fluid={gallery_image[0].gallery_item.childImageSharp.fluid}
-            alt={gallery_image[0].alt_text}
-          />
+          <GatsbyImage
+            image={gallery_image[0].gallery_item.childImageSharp.gatsbyImageData}
+            alt={gallery_image[0].alt_text} />
           <CardContent className={classes.cardContent}>
             <CardTitle>
               {size} {style}
@@ -83,7 +82,7 @@ function ProductCard(props) {
         </Button>
       </CardActions>
     </Card>
-  )
+  );
 }
 
 ProductCard.propTypes = {

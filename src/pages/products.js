@@ -1,5 +1,5 @@
 import React from "react"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 import styled from "@emotion/styled"
 import { graphql } from "gatsby"
 //components
@@ -134,10 +134,7 @@ const products = ({ location, data }) => {
 
               return (
                 <StyleCard key={node.id}>
-                  <Image
-                    fluid={featured_image.childImageSharp.fluid}
-                    alt={alt_text}
-                  />
+                  <GatsbyImage image={featured_image.childImageSharp.gatsbyImageData} alt={alt_text} />
                   <h2>{title}</h2>
                   <p>
                     Sizes available: <span>{sizes}</span>
@@ -147,45 +144,42 @@ const products = ({ location, data }) => {
                     <span>{`$${Number(starting_price).toFixed(2)} + tax`}</span>
                   </p>
                 </StyleCard>
-              )
+              );
             })
           )}
         </StylesCardContainer>
       </ContentWrapper>
     </Layout>
-  )
+  );
 }
 
 export default products
 
-export const buildingStyleQuery = graphql`
-  query productStyles {
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___title], order: ASC }
-      filter: { frontmatter: { template: { eq: "shed-styles" } } }
-    ) {
-      totalCount
-      edges {
-        node {
-          frontmatter {
-            title
-            template
-            sizes
-            starting_price
-            featured_image {
+export const buildingStyleQuery = graphql`query productStyles {
+  allMarkdownRemark(
+    sort: {fields: [frontmatter___title], order: ASC}
+    filter: {frontmatter: {template: {eq: "shed-styles"}}}
+  ) {
+    totalCount
+    edges {
+      node {
+        frontmatter {
+          title
+          template
+          sizes
+          starting_price
+          featured_image {
+            id
+            childImageSharp {
               id
-              childImageSharp {
-                id
-                fluid(maxWidth: 620) {
-                  ...GatsbyImageSharpFluid_tracedSVG
-                }
-              }
+              gatsbyImageData(width: 620, placeholder: TRACED_SVG, layout: CONSTRAINED)
             }
-            alt_text
           }
-          id
+          alt_text
         }
+        id
       }
     }
   }
+}
 `

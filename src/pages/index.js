@@ -2,7 +2,7 @@ import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import Button from "@material-ui/core/Button"
 import { graphql, Link } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 import React from "react"
 import RedButton from "../components/RedButton"
 import Seo from "../components/Seo"
@@ -52,10 +52,9 @@ const IndexPage = ({ data, location }, props) => (
       title={`Portable Storage Buildings & Rent-to-Own near London, KY`}
       pathname={location.pathname}
     />
-    <Image
-      fluid={data.heroImg.childImageSharp.fluid}
-      alt="Country Barn Builders London, KY shop"
-    />
+    <GatsbyImage
+      image={data.heroImg.childImageSharp.gatsbyImageData}
+      alt="Country Barn Builders London, KY shop" />
     <QualitySection>
       <ContentWrapper>
         <h1>Quality you can trust</h1>
@@ -96,10 +95,9 @@ const IndexPage = ({ data, location }, props) => (
     </RtoSection>
     <ContentWrapper>
       <RtoCard>
-        <Image
-          fluid={data.watsonLogo.childImageSharp.fluid}
-          alt="Watson Barn Rentals, LLC"
-        />
+        <GatsbyImage
+          image={data.watsonLogo.childImageSharp.gatsbyImageData}
+          alt="Watson Barn Rentals, LLC" />
         <div className="card-body">
           <h3>Watson Barn Rentals, LLC</h3>
           <p>
@@ -136,21 +134,16 @@ const IndexPage = ({ data, location }, props) => (
 
 export default IndexPage
 
-export const heroImgQuery = graphql`
-  query {
-    heroImg: file(relativePath: { eq: "shop-lot.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 2000, cropFocus: CENTER, maxHeight: 750) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-    watsonLogo: file(relativePath: { eq: "watson-logo.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 600) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
+export const heroImgQuery = graphql`{
+  heroImg: file(relativePath: {eq: "shop-lot.jpg"}) {
+    childImageSharp {
+      gatsbyImageData(transformOptions: {cropFocus: CENTER}, layout: FULL_WIDTH)
     }
   }
+  watsonLogo: file(relativePath: {eq: "watson-logo.png"}) {
+    childImageSharp {
+      gatsbyImageData(width: 600, layout: CONSTRAINED)
+    }
+  }
+}
 `

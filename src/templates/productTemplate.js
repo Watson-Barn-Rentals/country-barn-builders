@@ -1,5 +1,5 @@
 import { graphql, Link } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image";
 import React, { useState } from "react"
 import { Layout, ContentWrapper } from "../layouts"
 import Seo from "../components/Seo"
@@ -125,14 +125,10 @@ const productTemplate = ({ data, location }) => {
               </StyledLink>
               <ProductGallery>
                 <FullSizeImage>
-                  <Image
+                  <GatsbyImage
+                    image={gallery_image[activeIndex].gallery_item.childImageSharp.gatsbyImageData}
                     key={gallery_image[activeIndex].gallery_item.id}
-                    fluid={
-                      gallery_image[activeIndex].gallery_item.childImageSharp
-                        .fluid
-                    }
-                    alt={gallery_image[activeIndex].alt_text}
-                  />
+                    alt={gallery_image[activeIndex].alt_text} />
                 </FullSizeImage>
 
                 <ImageThumbnails>
@@ -151,12 +147,9 @@ const productTemplate = ({ data, location }) => {
                           }
                         }}
                       >
-                        <Image
-                          fixed={gallery_item.childImageSharp.fixed}
-                          alt={alt_text}
-                        />
+                        <GatsbyImage image={gallery_item.childImageSharp.gatsbyImageData} alt={alt_text} />
                       </ClickableDiv>
-                    )
+                    );
                   })}
                 </ImageThumbnails>
               </ProductGallery>
@@ -192,35 +185,32 @@ const productTemplate = ({ data, location }) => {
         )}
       </ContentWrapper>
     </Layout>
-  )
+  );
 }
 
 export default productTemplate
-export const pageQuery = graphql`
-  query($id: String!) {
-    markdownRemark(id: { eq: $id }) {
-      frontmatter {
-        size
-        style
-        serial
-        price
-        options
-        gallery_image {
-          gallery_item {
-            publicURL
-            id
-            childImageSharp {
-              fluid(maxWidth: 840) {
-                ...GatsbyImageSharpFluid
-              }
-              fixed(width: 100, height: 100) {
-                ...GatsbyImageSharpFixed
-              }
+export const pageQuery = graphql`query ($id: String!) {
+  markdownRemark(id: {eq: $id}) {
+    frontmatter {
+      size
+      style
+      serial
+      price
+      options
+      gallery_image {
+        gallery_item {
+          publicURL
+          id
+          childImageSharp {
+            gatsbyImageData(width: 840, layout: CONSTRAINED)
+            fixed(width: 100, height: 100) {
+              ...GatsbyImageSharpFixed
             }
           }
-          alt_text
         }
+        alt_text
       }
     }
   }
+}
 `

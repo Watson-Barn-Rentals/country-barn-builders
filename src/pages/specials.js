@@ -51,37 +51,34 @@ const specialsPage = ({ data, location }) => {
 }
 
 export default specialsPage
-export const allSpecialsQuery = graphql`
-  query allSpecials {
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___size], order: ASC }
-      filter: { frontmatter: { template: { eq: "product" } } }
-      limit: 1000
-    ) {
-      totalCount
-      edges {
-        node {
-          id
-          frontmatter {
-            title
-            gallery_image {
-              alt_text
-              gallery_item {
-                childImageSharp {
-                  id
-                  fluid {
-                    ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                  }
-                }
+export const allSpecialsQuery = graphql`query allSpecials {
+  allMarkdownRemark(
+    sort: {fields: [frontmatter___size], order: ASC}
+    filter: {frontmatter: {template: {eq: "product"}}}
+    limit: 1000
+  ) {
+    totalCount
+    edges {
+      node {
+        id
+        frontmatter {
+          title
+          gallery_image {
+            alt_text
+            gallery_item {
+              childImageSharp {
+                id
+                gatsbyImageData(placeholder: TRACED_SVG, layout: FULL_WIDTH)
               }
             }
-            price
-            size
-            style
-            serial
           }
+          price
+          size
+          style
+          serial
         }
       }
     }
   }
+}
 `
