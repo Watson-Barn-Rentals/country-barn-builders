@@ -39,7 +39,7 @@
     "react-typography": "^0.16.20",
     "typeface-roboto": "^1.1.13",
     "typeface-wellfleet": "^1.1.13",
-    -"typography": "^0.16.21",
+    "typography": "^0.16.21",
     "yarn": "^1.22.17"
   },
   "devDependencies": {
