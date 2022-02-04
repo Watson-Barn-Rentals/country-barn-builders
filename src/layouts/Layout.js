@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import { injectGlobal } from "emotion"
+import { injectGlobal } from "@emotion/css"
 import { ThemeProvider } from "emotion-theming"
 import React from "react"
 import Breakpoint from "react-socks"
