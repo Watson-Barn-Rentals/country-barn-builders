@@ -1,4 +1,4 @@
-import { css } from "@emotion/core"
+import { css } from "@emotion/react"
 import styled from "@emotion/styled"
 import Button from "@material-ui/core/Button"
 import { graphql, Link } from "gatsby"
